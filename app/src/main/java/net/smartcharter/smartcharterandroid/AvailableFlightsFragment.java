@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -29,11 +30,13 @@ import java.util.List;
  */
 public class AvailableFlightsFragment extends Fragment {
 
-    List<ParseObject> flights;
+    List<ParseObject> flights, myFlights;
 
     CustomAdapter adapter;
 
     ListView flights_list_view;
+
+    TextView page_title;
 
     public AvailableFlightsFragment() {
         // Required empty public constructor
@@ -71,9 +74,10 @@ public class AvailableFlightsFragment extends Fragment {
     }
 
     private void initializeFields(View view){
-        flights = new ArrayList<>();
 
+        flights = new ArrayList<>();
         flights_list_view = (ListView) view.findViewById(R.id.list_of_flights);
+        page_title = (TextView) view.findViewById(R.id.page_title);
 
         flights_list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -83,6 +87,7 @@ public class AvailableFlightsFragment extends Fragment {
 
             }
         });
+
     }
 
     private void showDialog(final View view){
@@ -94,7 +99,7 @@ public class AvailableFlightsFragment extends Fragment {
         // set dialog message
         alertDialogBuilder
                 .setMessage("Click reserve to reserve 1 ticket on this flight!")
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("Reserve", new DialogInterface.OnClickListener() {
                     public void onClick(final DialogInterface dialog, int id) {
 
@@ -144,6 +149,7 @@ public class AvailableFlightsFragment extends Fragment {
     }
 
     private void getFlights(){
+        flights = new ArrayList<>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Flights");
 
@@ -155,6 +161,37 @@ public class AvailableFlightsFragment extends Fragment {
                     if(!list.isEmpty()){
 
                         flights.addAll(list);
+
+                        adapter.notifyDataSetChanged();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "No Flights Found", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+
+
+
+    }
+
+    private void getMyFlights(){
+        flights = new ArrayList<>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Flights");
+        query.whereEqualTo("passenger", ParseUser.getCurrentUser().getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+
+                if(e == null){
+                    if(!list.isEmpty()){
+
+                        myFlights.addAll(list);
 
                         adapter.notifyDataSetChanged();
                     }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
@@ -14,20 +13,20 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
- * Created by James on 8/10/2015.
+ * Created by James on 8/11/2015.
  */
-public class CustomAdapter extends BaseAdapter {
+public class CustomAdapter2 extends BaseAdapter {
 
         public static final int FLIGHTS = 0;
         public static final int RESERVATIONS = 1;
-
+        private int mode;
         private LayoutInflater mInflater;
         private List<ParseObject> flights;
 
-        public CustomAdapter(Context context, List<ParseObject> flights) {
+        public CustomAdapter2(Context context, List<ParseObject> flights, int mode) {
             mInflater = LayoutInflater.from(context);
             this.flights = flights;
-
+            this.mode = mode;
         }
 
         @Override
@@ -47,34 +46,25 @@ public class CustomAdapter extends BaseAdapter {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
+            View view = convertView;
             ViewHolder holder;
+            if(convertView == null) {
+                view = mInflater.inflate(R.layout.list_item, parent, false);
+                holder = new ViewHolder();
+                holder.title = (TextView) view.findViewById(R.id.flight_title);
+                view.setTag(holder);
+            } else {
+                view = convertView;
+                holder = (ViewHolder)view.getTag();
+            }
 
-                    if(convertView == null) {
-                        view = mInflater.inflate(R.layout.list_item, parent, false);
-                        holder = new ViewHolder();
-                        holder.title = (TextView) view.findViewById(R.id.flight_title);
-                        holder.route = (TextView) view.findViewById(R.id.route);
-                        holder.time = (TextView) view.findViewById(R.id.time);
-                        holder.price = (TextView) view.findViewById(R.id.price);
-                        holder.seats = (TextView) view.findViewById(R.id.seats);
-                        view.setTag(holder);
-                    } else {
-                        view = convertView;
-                        holder = (ViewHolder)view.getTag();
-                    }
+            holder.index = position;
+            ParseObject curr1 = flights.get(position);
 
-                    holder.index = position;
-                    ParseObject curr = flights.get(position);
+            holder.flightId = curr1.getObjectId();
+            holder.title.setText(curr1.getString("Title"));
 
-                    holder.flightId = curr.getObjectId();
-                    holder.title.setText(curr.getString("Title"));
-                    holder.route.setText(getRoute(curr));
-                    holder.time.setText(getTime(curr));
-                    holder.seats.setText(curr.getNumber("availableSeats").toString() + " seats available");
-                    holder.price.setText("$" + curr.getNumber("Price").toString());
-
-          return view;
+            return view;
 
         }
 
@@ -103,4 +93,6 @@ public class CustomAdapter extends BaseAdapter {
 
             return message;
         }
+
+
 }
