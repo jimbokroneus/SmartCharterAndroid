@@ -58,6 +58,7 @@ public class CustomAdapter extends BaseAdapter {
                 holder = (ViewHolder)view.getTag();
             }
 
+            holder.index = position;
             ParseObject curr = flights.get(position);
 
             holder.title.setText(curr.getString("Title"));
@@ -71,6 +72,7 @@ public class CustomAdapter extends BaseAdapter {
 
         private class ViewHolder {
             public TextView title, time, route, price, seats;
+            public int index;
         }
 
         private String getRoute(ParseObject curr){

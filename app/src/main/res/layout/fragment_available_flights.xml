@@ -3,9 +3,6 @@
     android:layout_height="match_parent"
     tools:context="net.smartcharter.smartcharterandroid.AvailableFlightsFragment">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
 
         <LinearLayout
             android:orientation="vertical"
@@ -16,17 +13,17 @@
                 style="?android:textAppearanceLarge"
                 android:gravity="center"
                 android:id="@+id/page_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
                 android:text="Available Flights" />
 
             <ListView
                 android:id="@+id/list_of_flights"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
+
             </ListView>
 
         </LinearLayout>
-    </ScrollView>
 
 </FrameLayout>

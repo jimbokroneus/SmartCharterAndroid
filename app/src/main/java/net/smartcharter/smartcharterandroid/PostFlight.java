@@ -28,13 +28,13 @@ import java.util.Date;
 
 public class PostFlight extends Fragment {
 
-    EditText title, description, dCity, dDate, dTime, aCity, aDate, aTime;
+    EditText title, description, price, seats, dCity, dDate, dTime, aCity, aDate, aTime;
 
     Spinner dSpinner, aSpinner;
 
     Button post_button;
 
-    Date departure, arrival;
+    Calendar aCalendar, dCalendar;
 
 
     public PostFlight() {
@@ -70,14 +70,17 @@ public class PostFlight extends Fragment {
         aCity = (EditText) view.findViewById(R.id.arrival_city_entry);
         aDate = (EditText) view.findViewById(R.id.arrival_date);
         aTime = (EditText) view.findViewById(R.id.arrival_time);
-
-
+        price = (EditText) view.findViewById(R.id.price_entry);
+        seats = (EditText) view.findViewById(R.id.seats_entry);
 
         dSpinner = (Spinner) view.findViewById(R.id.departure_spinner);
         aSpinner = (Spinner) view.findViewById(R.id.arrival_spinner);
 
         dSpinner.setAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_item));
         aSpinner.setAdapter(ArrayAdapter.createFromResource(getActivity(), R.array.states, android.R.layout.simple_spinner_item));
+
+        dCalendar = Calendar.getInstance();
+        aCalendar = Calendar.getInstance();
 
         post_button = (Button) view.findViewById(R.id.post_button);
 
@@ -91,10 +94,9 @@ public class PostFlight extends Fragment {
         dDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                int mYear = dCalendar.get(Calendar.YEAR);
+                int mMonth = dCalendar.get(Calendar.MONTH);
+                int mDay = dCalendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker;
                 mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -103,6 +105,9 @@ public class PostFlight extends Fragment {
                     /*      Your code   to get date and time    */
                         selectedmonth = selectedmonth + 1;
                         dDate.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+                        dCalendar.set(Calendar.YEAR, selectedyear);
+                        dCalendar.set(Calendar.MONTH, selectedmonth);
+                        dCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Date");
@@ -113,10 +118,9 @@ public class PostFlight extends Fragment {
         aDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar mcurrentDate = Calendar.getInstance();
-                int mYear = mcurrentDate.get(Calendar.YEAR);
-                int mMonth = mcurrentDate.get(Calendar.MONTH);
-                int mDay = mcurrentDate.get(Calendar.DAY_OF_MONTH);
+                int mYear = aCalendar.get(Calendar.YEAR);
+                int mMonth = aCalendar.get(Calendar.MONTH);
+                int mDay = aCalendar.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog mDatePicker;
                 mDatePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
@@ -125,6 +129,9 @@ public class PostFlight extends Fragment {
                     /*      Your code   to get date and time    */
                         selectedmonth = selectedmonth + 1;
                         aDate.setText("" + selectedday + "/" + selectedmonth + "/" + selectedyear);
+                        aCalendar.set(Calendar.YEAR, selectedyear);
+                        aCalendar.set(Calendar.MONTH, selectedmonth);
+                        aCalendar.set(Calendar.DAY_OF_MONTH, selectedday);
                     }
                 }, mYear, mMonth, mDay);
                 mDatePicker.setTitle("Select Date");
@@ -135,15 +142,16 @@ public class PostFlight extends Fragment {
         dTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+                int hour = dCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute = dCalendar.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         dTime.setText("" + selectedHour + ":" + selectedMinute);
+                        dCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        dCalendar.set(Calendar.MINUTE, selectedMinute);
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
@@ -155,15 +163,17 @@ public class PostFlight extends Fragment {
         aTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar mcurrentTime = Calendar.getInstance();
-                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = mcurrentTime.get(Calendar.MINUTE);
+
+                int hour = aCalendar.get(Calendar.HOUR_OF_DAY);
+                int minute = aCalendar.get(Calendar.MINUTE);
+
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         aTime.setText("" + selectedHour + ":" + selectedMinute);
+                        aCalendar.set(Calendar.HOUR_OF_DAY, selectedHour);
+                        aCalendar.set(Calendar.MINUTE, selectedMinute);
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Select Time");
@@ -187,8 +197,8 @@ public class PostFlight extends Fragment {
         String dState = dSpinner.getSelectedItem().toString();
         String aState = dSpinner.getSelectedItem().toString();
 
-        Date dDate = new Date();
-        Date aDate = new Date();
+        Date dDate = dCalendar.getTime();
+        Date aDate = aCalendar.getTime();
 
         //validate all entries
 

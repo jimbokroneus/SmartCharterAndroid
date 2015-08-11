@@ -10,6 +10,7 @@
         android:layout_height="fill_parent">
 
         <LinearLayout
+            android:descendantFocusability="afterDescendants"
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
@@ -34,6 +35,21 @@
                 android:id="@+id/details_entry"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
+
+            <EditText
+                android:inputType="number"
+                android:hint="Price"
+                android:id="@+id/price_entry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:inputType="number"
+                android:hint="Available Seats"
+                android:id="@+id/seats_entry"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
 
             <LinearLayout
                 android:orientation="vertical"
@@ -60,7 +76,8 @@
 
                     <EditText
                         android:layout_weight="1"
-                        android:inputType="date"
+                        android:inputType="none"
+                        android:editable="false"
                         android:hint="Departure Date"
                         android:id="@+id/departure_date"
                         android:layout_width="fill_parent"
@@ -68,7 +85,8 @@
 
                     <EditText
                         android:layout_weight="1"
-                        android:inputType="time"
+                        android:inputType="none"
+                        android:editable="false"
                         android:hint="Departure Time"
                         android:id="@+id/departure_time"
                         android:layout_width="fill_parent"
@@ -105,7 +123,8 @@
 
                     <EditText
                         android:layout_weight="1"
-                        android:inputType="date"
+                        android:inputType="none"
+                        android:editable="false"
                         android:hint="Arrival Date"
                         android:id="@+id/arrival_date"
                         android:layout_width="fill_parent"
@@ -113,7 +132,8 @@
 
                     <EditText
                         android:layout_weight="1"
-                        android:inputType="time"
+                        android:inputType="none"
+                        android:editable="false"
                         android:hint="Arrival Time"
                         android:id="@+id/arrival_time"
                         android:layout_width="fill_parent"
