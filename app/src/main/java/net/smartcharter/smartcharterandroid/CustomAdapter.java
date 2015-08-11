@@ -61,6 +61,7 @@ public class CustomAdapter extends BaseAdapter {
             holder.index = position;
             ParseObject curr = flights.get(position);
 
+            holder.flightId = curr.getObjectId();
             holder.title.setText(curr.getString("Title"));
             holder.route.setText(getRoute(curr));
             holder.time.setText(getTime(curr));
@@ -70,9 +71,10 @@ public class CustomAdapter extends BaseAdapter {
             return view;
         }
 
-        private class ViewHolder {
+        public class ViewHolder {
             public TextView title, time, route, price, seats;
             public int index;
+            public String flightId;
         }
 
         private String getRoute(ParseObject curr){
