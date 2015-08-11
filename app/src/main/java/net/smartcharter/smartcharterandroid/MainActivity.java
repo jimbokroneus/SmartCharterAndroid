@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class MainActivity extends Activity {
 
     private DrawerLayout drawerLayout;
     private ListView drawerList;
+
+    public static ParseUser currentUser;
 
 
     @Override
@@ -35,7 +38,7 @@ public class MainActivity extends Activity {
         Parse.initialize(this, "WDSBAlthpw9UdFyveLlV4jJsJFoNPVq81MJ2Mwpl", "Vc58QcyJQYQtZYsPtilwSAUj1dM46aKuCGh36WAh");
 
         //do initial fragment load
-        Tools.replaceFragment(R.id.main_fragment_container, getFragmentManager(), new HomeFragment(), true);
+        Tools.replaceFragment(R.id.main_fragment_container, getFragmentManager(), new LoginFragment(), true);
 
         setUpNavDrawer();
 
@@ -47,6 +50,7 @@ public class MainActivity extends Activity {
         String[] titles = new String[]{"Home", "Available Flights", "Available Charters", "Settings", "About Us"};
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
+        drawerLayout.closeDrawers();
 
         // Set the adapter for the list view
         drawerList.setAdapter(new ArrayAdapter<>(this,

@@ -1,0 +1,26 @@
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.smartcharter.smartcharterandroid.LoginFragment">
+
+   <EditText
+       android:hint="Username"
+       android:id="@+id/username_entry"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content" />
+
+    <EditText
+        android:hint="Password"
+        android:id="@+id/password_entry"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:text="Sign In"
+        android:id="@+id/login_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>
