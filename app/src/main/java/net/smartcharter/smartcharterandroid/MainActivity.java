@@ -12,6 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import java.util.List;
 
 
@@ -25,6 +28,11 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Enable Local Datastore.
+        Parse.enableLocalDatastore(this);
+
+        Parse.initialize(this, "WDSBAlthpw9UdFyveLlV4jJsJFoNPVq81MJ2Mwpl", "Vc58QcyJQYQtZYsPtilwSAUj1dM46aKuCGh36WAh");
 
         //do initial fragment load
         Tools.replaceFragment(R.id.main_fragment_container, getFragmentManager(), new HomeFragment(), true);

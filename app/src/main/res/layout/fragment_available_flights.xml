@@ -12,10 +12,13 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
-
-            <TextView android:layout_width="match_parent"
+            <TextView
+                style="?android:textAppearanceLarge"
+                android:gravity="center"
+                android:id="@+id/page_title"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="@string/hello_blank_fragment" />
+                android:text="Available Flights" />
 
             <ListView
                 android:id="@+id/list_of_flights"
