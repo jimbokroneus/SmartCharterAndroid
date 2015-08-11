@@ -47,7 +47,7 @@ public class MainActivity extends Activity {
     private void setUpNavDrawer(){
 
         //set up nav Drawer
-        String[] titles = new String[]{"Home", "Available Flights", "Available Charters", "Settings", "About Us"};
+        String[] titles = new String[]{"Home", "Available Flights", "Post A Flight", "Settings", "About Us"};
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawerList = (ListView) findViewById(R.id.left_drawer);
         drawerLayout.closeDrawers();
@@ -60,6 +60,8 @@ public class MainActivity extends Activity {
         drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                drawerLayout.closeDrawers();
 
                 switch(position){
 
@@ -74,7 +76,8 @@ public class MainActivity extends Activity {
                         break;
 
                     case 2:
-                        //move to settings
+                        //move to post flight
+                        Tools.replaceFragment(R.id.main_fragment_container, getFragmentManager(), new PostFlight(), true);
 
                         break;
 
